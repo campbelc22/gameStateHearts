@@ -19,5 +19,7 @@ public class gameStateHearts {
     ArrayList<Card> p2Hand = new ArrayList<>();
     ArrayList<Card> p3Hand = new ArrayList<>();
     ArrayList<Card> p4Hand = new ArrayList<>();
+    boolean heartsBroken;
+    int suitLed;
 
 }
