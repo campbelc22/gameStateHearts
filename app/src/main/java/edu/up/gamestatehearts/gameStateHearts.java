@@ -23,6 +23,8 @@ public class gameStateHearts {
     ArrayList<Card> p4Hand = new ArrayList<>();
     boolean heartsBroken;
     int suitLed;
+    int whoTurn;
+    int tricksPlayed;
 
     public gameStateHearts() {
         p1numCurrentPoints = 0;
@@ -38,5 +40,29 @@ public class gameStateHearts {
         numCards = 13;
         heartsBroken = false;
         suitLed = coins;
+        tricksPlayed = 0;
+    }
+    boolean quit() {
+        //you can always quit!!
+        return true;
+    }
+    boolean collectTrick () {
+        //if suit of card played == suitLed
+        return true;
+    }
+    boolean selectCard() {
+        if(whoTurn == 1) {
+            return true;
+        }
+        else { return false; }
+    }
+    boolean playCard() {
+        if(selectCard()) {
+            return true;
+        }
+        return false;
+    }
+    boolean passCard(){
+        return false;
     }
 }
