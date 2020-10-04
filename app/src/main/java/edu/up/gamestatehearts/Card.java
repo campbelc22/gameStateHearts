@@ -1,6 +1,11 @@
 package edu.up.gamestatehearts;
 
 public class Card {
+    //hearts = cups
+    //swords = spades
+    //coins = clubs
+    //wands = diamonds
+
     public static final int cups = 1;
     public static final int swords = 2;
     public static final int coins = 3;

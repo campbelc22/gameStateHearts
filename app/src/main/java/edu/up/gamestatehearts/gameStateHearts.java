@@ -2,6 +2,8 @@ package edu.up.gamestatehearts;
 
 import java.util.ArrayList;
 
+import static edu.up.gamestatehearts.Card.coins;
+
 public class gameStateHearts {
 
     //instance variables
@@ -22,4 +24,19 @@ public class gameStateHearts {
     boolean heartsBroken;
     int suitLed;
 
+    public gameStateHearts() {
+        p1numCurrentPoints = 0;
+        p2numCurrentPoints = 0;
+        p3numCurrentPoints = 0;
+        p4numCurrentPoints = 0;
+
+        p1RunningPoints = 0;
+        p2RunningPoints = 0;
+        p3RunningPoints = 0;
+        p4RunningPoints = 0;
+
+        numCards = 13;
+        heartsBroken = false;
+        suitLed = coins;
+    }
 }
