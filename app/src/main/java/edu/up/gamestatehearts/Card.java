@@ -20,6 +20,10 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
+    public Card (Card card){ //deep copy
+        Card newCard = new Card(card.cardVal, card.cardSuit);
+    }
+
     public int getCardSuit() {
         return cardSuit;
     }
