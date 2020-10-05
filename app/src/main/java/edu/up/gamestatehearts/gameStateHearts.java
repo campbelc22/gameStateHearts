@@ -7,14 +7,8 @@ import static edu.up.gamestatehearts.Card.coins;
 public class gameStateHearts {
 
     //instance variables
-    int p1numCurrentPoints;
-    int p2numCurrentPoints;
-    int p3numCurrentPoints;
-    int p4numCurrentPoints;
-    int p1RunningPoints;
-    int p2RunningPoints;
-    int p3RunningPoints;
-    int p4RunningPoints;
+    int p1numCurrentPoints, p2numCurrentPoints, p3numCurrentPoints, p4numCurrentPoints;
+    int p1RunningPoints, p2RunningPoints, p3RunningPoints, p4RunningPoints;
 
     int numCards;
     ArrayList<Card> p1Hand;
@@ -25,6 +19,9 @@ public class gameStateHearts {
     int suitLed;
     int whoTurn;
     int tricksPlayed;
+    int cardsPassed;
+
+    Card p1CardPlayed, p2CardPlayed, p3CardPlayed, p4CardPlayed;
 
     public gameStateHearts() {
         p1numCurrentPoints = 0;
@@ -41,6 +38,7 @@ public class gameStateHearts {
         heartsBroken = false;
         suitLed = coins;
         tricksPlayed = 0;
+        cardsPassed=0;
 
         p1Hand = new ArrayList<>();
         p2Hand = new ArrayList<>();
@@ -83,9 +81,44 @@ public class gameStateHearts {
         //you can always quit!!
         return true;
     }
+    boolean isInSuit (Card card) {
+        int suit = card.getCardSuit();
+        if (suitLed == suit) {
+            return true;
+        }
+        return false;
+    }
+
+    ArrayList<Card> CardsInSuit() {
+        ArrayList<Card> cardsInSuit = new ArrayList<>();
+        if(isInSuit(p1CardPlayed)) {
+            cardsInSuit.add(p1CardPlayed);
+        }
+        if(isInSuit(p2CardPlayed)) {
+            cardsInSuit.add(p2CardPlayed);
+        }
+        if(isInSuit(p3CardPlayed)) {
+            cardsInSuit.add(p3CardPlayed);
+        }
+        if(isInSuit(p4CardPlayed)) {
+            cardsInSuit.add(p4CardPlayed);
+        }
+        return cardsInSuit;
+    }
+
     boolean collectTrick () {
         //if suit of card played == suitLed
-        return true;
+        int highVal=0;
+        Card highCard = new Card(0, suitLed);
+        for (Card card : CardsInSuit()) {
+            if (highVal > card.getCardVal()) {
+                highCard = card;
+            }
+        }
+        if(highCard == p1CardPlayed){
+            return true;
+        }
+        return false;
     }
     boolean selectCard() {
         if(whoTurn == 1) {
@@ -100,6 +133,9 @@ public class gameStateHearts {
         return false;
     }
     boolean passCard(){
+        if(cardsPassed <4 && selectCard() &&tricksPlayed ==0) {
+            return true;
+        }
         return false;
     }
 
