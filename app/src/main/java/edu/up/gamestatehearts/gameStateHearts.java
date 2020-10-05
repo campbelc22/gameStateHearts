@@ -195,5 +195,4 @@ public class gameStateHearts {
                         + "Player 3 Hand:\n" + p3HandString + "\n"
                         + "Player 4 Hand:\n" + p4HandString;
     }
-
 }
