@@ -113,7 +113,7 @@ public class gameStateHearts {
         return cardsInSuit;
     }
 
-    boolean collectTrick () {
+   /* boolean collectTrick () {
         //if suit of card played == suitLed
         int highVal=0;
         Card highCard = new Card(0, suitLed);
@@ -126,7 +126,7 @@ public class gameStateHearts {
             return true;
         }
         return false;
-    }
+    }*/
     boolean selectCard() {
         if(whoTurn == 1) {
             return true;
@@ -172,27 +172,27 @@ public class gameStateHearts {
 
 
         return //prints the CURRENT score of the players to the Logcat Info window
-                "Player 1 Current Points: " + p1numCurrentPoints
-                        + "Player 2 Current Points: " + p2numCurrentPoints
-                        + "Player 3 Current Points: " + p3numCurrentPoints
-                        + "Player 4 Current Points: " + p4numCurrentPoints
+                "Player 1 Current Points: " + p1numCurrentPoints + "\n"
+                        + "Player 2 Current Points: " + p2numCurrentPoints + "\n"
+                        + "Player 3 Current Points: " + p3numCurrentPoints + "\n"
+                        + "Player 4 Current Points: " + p4numCurrentPoints + "\n"
 
                         //prints the RUNNING score of the players to the Logcat Info window
-                        + "Player 1 Running Points: " + p1RunningPoints
-                        + "Player 2 Running Points: " + p2RunningPoints
-                        + "Player 3 Running Points: " + p3RunningPoints
-                        + "Player 4 Running Points: " + p4RunningPoints
+                        + "Player 1 Running Points: " + p1RunningPoints + "\n"
+                        + "Player 2 Running Points: " + p2RunningPoints + "\n"
+                        + "Player 3 Running Points: " + p3RunningPoints + "\n"
+                        + "Player 4 Running Points: " + p4RunningPoints + "\n"
 
                         //prints numCards
-                        + "Number of Cards in Hands: " + numCards
+                        + "Number of Cards in Hands: " + numCards + "\n"
 
                         //prints reference for what the suit numbers mean
-                        + "1 = Cups\n2 = swords\n3 = coins\n4 = wands"
+                        + "1 = Cups\n2 = swords\n3 = coins\n4 = wands" + "\n"
 
                         //prints the hands of each player
                         + "Player 1 Hand:\n" + p1HandString + "\n"
                         + "Player 2 Hand:\n" + p2HandString + "\n"
                         + "Player 3 Hand:\n" + p3HandString + "\n"
-                        + "Player 4 Hand:\n" + p4HandString;
+                        + "Player 4 Hand:\n" + p4HandString + "\n" + " \n";
     }
 }
