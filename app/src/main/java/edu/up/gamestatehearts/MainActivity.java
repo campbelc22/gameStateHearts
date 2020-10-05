@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button testButton;
     private String secondInstanceToString;
     private String fourthInstanceToString;
+    private Card testCard= new Card(10,1);
 
     @Override
     public void onClick (View v){
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gameStateHearts firstInstance = new gameStateHearts();
         gameStateHearts secondInstance = new gameStateHearts(firstInstance);
 
-        firstInstance.selectCard();
+        firstInstance.selectCard(testCard);
         editText.append("Player selected card.\n");
 
        /* firstInstance.collectTrick();

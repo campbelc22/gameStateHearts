@@ -12,6 +12,7 @@ public class gameStateHearts {
     int p1RunningPoints, p2RunningPoints, p3RunningPoints, p4RunningPoints;
 
     int numCards;
+    Card selectedCard;
 
     String p1HandString;
     String p2HandString;
@@ -112,7 +113,7 @@ public class gameStateHearts {
         }
         return cardsInSuit;
     }
-
+//Can this be automatic?
    /* boolean collectTrick () {
         //if suit of card played == suitLed
         int highVal=0;
@@ -127,20 +128,28 @@ public class gameStateHearts {
         }
         return false;
     }*/
-    boolean selectCard() {
+    boolean selectCard(Card card) {
         if(whoTurn == 1) {
+            selectedCard= new Card(card);
+            //add code to insert card into variable that we can use in playCard
+            //add code to highlight/make card bigger or whatever we decide
             return true;
         }
         else { return false; }
     }
     boolean playCard() {
-        if(selectCard()) {
+        if(whoTurn == 1) {
+            //add code to check if card is a valid play, ex. correct suit
+            //check to see if selectedCard is not null
+            //play selectedCard
             return true;
         }
         return false;
     }
     boolean passCard(){
-        if(cardsPassed <4 && selectCard() &&tricksPlayed ==0) {
+        if(cardsPassed <4 && whoTurn == 1 &&tricksPlayed ==0) {
+            //check to see if selectedCard is not null
+            //pass selectedCard
             return true;
         }
         return false;
