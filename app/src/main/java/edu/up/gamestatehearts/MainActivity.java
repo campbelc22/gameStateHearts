@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editText;
     private String editHold;
     private Button testButton;
+    private String secondInstanceToString;
+    private String fourthInstanceToString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,26 +38,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.append("Player selected card.");
 
         firstInstance.collectTrick();
-        editHold= editText.getText().toString();
-        editText.setText(editHold + "Player collected cards.\n", TextView.BufferType.NORMAL);
+        editText.append("Player collected cards.\n");
 
         firstInstance.passCard();
-        editHold= editText.getText().toString();
-        editText.setText(editHold + "Player passed cards.\n", TextView.BufferType.NORMAL);
+        editText.append("Player passed cards.\n");
 
         firstInstance.playCard();
-        editHold= editText.getText().toString();
-        editText.setText(editHold + "Player played card.\n", TextView.BufferType.NORMAL);
+        editText.append("Player played card.\n");
 
         firstInstance.quit();
-        editHold= editText.getText().toString();
-        editText.setText(editHold + "Player quit game.\n", TextView.BufferType.NORMAL);
+        editText.append("Player quit game.\n");
 
 
         gameStateHearts thirdInstance= new gameStateHearts();
         gameStateHearts fourthInstance= new gameStateHearts(thirdInstance);
 
-        
+        editText.append("Called toString on second and fourth Instances.\n");
+
+        secondInstanceToString= secondInstance.toString();
+        fourthInstanceToString= fourthInstance.toString();
+        if(secondInstanceToString.equals(fourthInstanceToString)){
+            editText.append("Instances are equal.\n");
+        }else{
+            editText.append("Instances are not equal.\n");
+        }
+        editText.append(secondInstanceToString);
+        editText.append(fourthInstanceToString);
+
+
+
 
     }
 
