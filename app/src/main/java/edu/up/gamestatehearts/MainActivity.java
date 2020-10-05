@@ -29,7 +29,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v){
         editText.setText("", TextView.BufferType.NORMAL);
         gameStateHearts firstInstance= new gameStateHearts();
-
+        gameStateHearts secondInstance= new gameStateHearts(firstInstance);
+        editText.
+        firstInstance.collectTrick();
+        firstInstance.selectCard();
+        firstInstance.passCard();
+        firstInstance.playCard();
+        firstInstance.quit();
 
     }
 
