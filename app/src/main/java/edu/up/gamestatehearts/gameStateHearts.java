@@ -134,6 +134,7 @@ public class gameStateHearts {
     }
     boolean passCard(){
         if(cardsPassed <4 && selectCard() &&tricksPlayed ==0) {
+            cardsPassed++;
             return true;
         }
         return false;
