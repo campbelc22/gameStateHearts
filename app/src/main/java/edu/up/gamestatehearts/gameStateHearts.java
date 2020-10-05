@@ -39,4 +39,5 @@ public class gameStateHearts {
         heartsBroken = false;
         suitLed = coins;
     }
+
 }
