@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.setText("", TextView.BufferType.NORMAL);
         gameStateHearts firstInstance= new gameStateHearts();
         gameStateHearts secondInstance= new gameStateHearts(firstInstance);
+
         firstInstance.selectCard();
-        editText.setText("Player selected a card.\n", TextView.BufferType.NORMAL);
+        editText.append("Player selected card.");
 
         firstInstance.collectTrick();
         editHold= editText.getText().toString();
@@ -46,9 +47,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editHold= editText.getText().toString();
         editText.setText(editHold + "Player played card.\n", TextView.BufferType.NORMAL);
 
+        firstInstance.quit();
         editHold= editText.getText().toString();
         editText.setText(editHold + "Player quit game.\n", TextView.BufferType.NORMAL);
-        firstInstance.quit();
+
+
+        gameStateHearts thirdInstance= new gameStateHearts();
+        gameStateHearts fourthInstance= new gameStateHearts(thirdInstance);
+
+        
 
     }
 
