@@ -65,6 +65,13 @@ public class gameStateHearts {
         cardsPlayed = new ArrayList<>();
     }
 
+    /**
+     * Deep Copy Constructor
+     * creates and returns a new game state with all the attributes
+     * of a provided state
+     *
+     * @param oldState  the state to be copied
+     */
     public gameStateHearts(gameStateHearts oldState){ //deep copy gameStateHearts
         p1numCurrentPoints = oldState.p1numCurrentPoints;
         p2numCurrentPoints = oldState.p2numCurrentPoints;
@@ -88,6 +95,11 @@ public class gameStateHearts {
         cardsPlayed= handDeepCopy(oldState.cardsPlayed);
     }
 
+    /**
+     * a helper method to deep-copy a hand
+     * @param oldHand   the hand to be copied
+     * @return          the new hand
+     */
     private ArrayList<Card> handDeepCopy(ArrayList<Card> oldHand){
         ArrayList<Card> newList = new ArrayList<>();
         for (int i = 0; i < oldHand.size(); i++){
@@ -98,11 +110,7 @@ public class gameStateHearts {
     }
 
 
-    /**
-     * Getters
-     *
-     * @return value
-     */
+    /** Setters for instance variables **/
     public int getP1numCurrentPoints() {
         return p1numCurrentPoints;
     }
@@ -210,14 +218,11 @@ public class gameStateHearts {
     public Card getP3CardPlayed() {
         return p3CardPlayed;
     }
-
     public Card getP4CardPlayed() {
         return p4CardPlayed;
     }
 
-    /**
-     * Setters
-     */
+    /**Setters for instance variables**/
     public void setP1numCurrentPoints(int p1numCurrentPoints) {
         this.p1numCurrentPoints = p1numCurrentPoints;
     }
