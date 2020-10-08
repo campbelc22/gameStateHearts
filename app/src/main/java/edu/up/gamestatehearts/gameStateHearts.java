@@ -1,6 +1,8 @@
 package edu.up.gamestatehearts;
 
 import android.util.Log;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static edu.up.gamestatehearts.Card.coins;
@@ -22,6 +24,8 @@ public class gameStateHearts {
     ArrayList<Card> p2Hand;
     ArrayList<Card> p3Hand;
     ArrayList<Card> p4Hand;
+    ArrayList<Card> cardsPlayed;
+
     boolean heartsBroken;
     int suitLed;
     int whoTurn;
@@ -45,12 +49,13 @@ public class gameStateHearts {
         heartsBroken = false;
         suitLed = coins;
         tricksPlayed = 0;
-        cardsPassed=0;
+        cardsPassed = 0;
 
         p1Hand = new ArrayList<>();
         p2Hand = new ArrayList<>();
         p3Hand = new ArrayList<>();
         p4Hand = new ArrayList<>();
+        cardsPlayed = new ArrayList<>();
     }
 
     public gameStateHearts(gameStateHearts oldState){ //deep copy gameStateHearts
@@ -73,6 +78,7 @@ public class gameStateHearts {
         p2Hand = handDeepCopy(oldState.p2Hand);
         p3Hand = handDeepCopy(oldState.p3Hand);
         p4Hand = handDeepCopy(oldState.p4Hand);
+        cardsPlayed= handDeepCopy(oldState.cardsPlayed);
     }
 
     private ArrayList<Card> handDeepCopy(ArrayList<Card> oldHand){
@@ -131,25 +137,20 @@ public class gameStateHearts {
     boolean selectCard(Card card) {
         if(whoTurn == 1) {
             selectedCard= new Card(card);
-            //add code to insert card into variable that we can use in playCard
-            //add code to highlight/make card bigger or whatever we decide
             return true;
         }
         else { return false; }
     }
     boolean playCard() {
         if(whoTurn == 1) {
-            //add code to check if card is a valid play, ex. correct suit
-            //check to see if selectedCard is not null
-            //play selectedCard
+            cardsPlayed.add(selectedCard);
             return true;
         }
         return false;
     }
     boolean passCard(){
         if(cardsPassed <4 && whoTurn == 1 &&tricksPlayed ==0) {
-            //check to see if selectedCard is not null
-            //pass selectedCard
+
             return true;
         }
         return false;
