@@ -64,10 +64,10 @@ public class Card {
         int check = checkCardVals(oldCard.cardVal, oldCard.cardVal);
         if (check < 0) {
             if (check == -1) {
-                Log.e("Card", "Tried to initialize a card with a bad value: " + cardVal);
+                Log.e("Card", "Tried to initialize a card with a bad value: " + oldCard.cardVal);
             }
             if (check == -2) {
-                Log.e("Card", "Tried to initialize a card with a bad suit: " + cardSuit);
+                Log.e("Card", "Tried to initialize a card with a bad suit: " + oldCard.cardSuit);
             }
             this.cardVal = -1;
             this.cardSuit = -1;
@@ -105,10 +105,35 @@ public class Card {
     }
 
     /**
-     * setter for a card's value
+     * setter for a card's suit
+     * @param newSuit   must be within 1-4
+     */
+    public void setCardSuit(int newSuit){
+        if (newSuit < 1 || newSuit > 4){
+            Log.e("Card", "Tried to give a card with a bad suit: " + newSuit);
+            return;
+        }
+        this.cardSuit = newSuit;
+    }
+
+    /**
+     * getter for a card's value
      * @return  value
      */
     public int getCardVal() {
         return cardVal;
     }
+
+    /**
+     * setter for a card's value
+     * @param newVal    must be within 1-13
+     */
+    public void setCardVal(int newVal){
+        if (newVal < 1 || newVal > 4){
+            Log.e("Card", "Tried to give a card with a bad value: " + newVal);
+            return;
+        }
+        this.cardVal = newVal;
+    }
+
 }
