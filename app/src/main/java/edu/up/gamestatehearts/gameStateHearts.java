@@ -1,3 +1,10 @@
+/**
+ * GameStateHearts class
+ * contains all information for the Hearts (Chalice) game state
+ *
+ * @version October 8, 2020
+ * @author  Alex Junkins, Malia Lundstrom, Chloe Campbell, Addison Raak
+ */
 package edu.up.gamestatehearts;
 
 import android.util.Log;
@@ -34,6 +41,10 @@ public class gameStateHearts {
 
     Card p1CardPlayed, p2CardPlayed, p3CardPlayed, p4CardPlayed;
 
+    /**
+     * Empty Constructor
+     * Initializes a game state with default values in its
+     */
     public gameStateHearts() {
         p1numCurrentPoints = 0;
         p2numCurrentPoints = 0;
