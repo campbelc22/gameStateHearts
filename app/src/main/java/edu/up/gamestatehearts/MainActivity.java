@@ -1,5 +1,6 @@
 package edu.up.gamestatehearts;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import static edu.up.gamestatehearts.R.id.runTestButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //declare variables
     private EditText editText;
     private Button testButton;
     private String secondInstanceToString;
