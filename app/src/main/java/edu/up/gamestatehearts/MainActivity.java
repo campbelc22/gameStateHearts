@@ -15,8 +15,53 @@ import static edu.up.gamestatehearts.R.id.runTestButton;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editText;
-    private String editHold;
     private Button testButton;
+    private String secondInstanceToString;
+    private String fourthInstanceToString;
+    private Card testCard= new Card(10,1);
+
+    @Override
+    public void onClick (View v){
+        editText.setText("", TextView.BufferType.NORMAL);
+        gameStateHearts firstInstance = new gameStateHearts();
+        gameStateHearts secondInstance = new gameStateHearts(firstInstance);
+
+        firstInstance.selectCard(testCard);
+        editText.append("Player selected card.\n");
+
+       /* firstInstance.collectTrick();
+        editText.append("Player collected cards.\n");
+
+        */
+
+        firstInstance.passCard();
+        editText.append("Player passed cards.\n");
+
+        firstInstance.playCard();
+        editText.append("Player played card.\n");
+
+        firstInstance.quit();
+        editText.append("Player quit game.\n");
+
+
+        gameStateHearts thirdInstance = new gameStateHearts();
+        gameStateHearts fourthInstance = new gameStateHearts(thirdInstance);
+
+        editText.append("Called toString on second and fourth Instances.\n");
+
+        secondInstanceToString = secondInstance.toString();
+        fourthInstanceToString = fourthInstance.toString();
+        if (secondInstanceToString.equals(fourthInstanceToString)) {
+            editText.append("Instances are equal.\n \n");
+        } else {
+            editText.append("Instances are not equal.\n");
+        }
+
+        editText.append("Second Instance: \n" + secondInstanceToString);
+        editText.append("Fourth Instance: \n" + fourthInstanceToString);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,30 +71,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText = findViewById(R.id.editTextMulti);
     }
 
-    @Override
-    public void onClick(View v){
-        editText.setText("", TextView.BufferType.NORMAL);
-        gameStateHearts firstInstance= new gameStateHearts();
-        gameStateHearts secondInstance= new gameStateHearts(firstInstance);
-        firstInstance.selectCard();
-        editText.setText("Player selected a card.\n", TextView.BufferType.NORMAL);
-
-        firstInstance.collectTrick();
-        editHold= editText.getText().toString();
-        editText.setText(editHold + "Player collected cards.\n", TextView.BufferType.NORMAL);
-
-        firstInstance.passCard();
-        editHold= editText.getText().toString();
-        editText.setText(editHold + "Player passed cards.\n", TextView.BufferType.NORMAL);
-
-        firstInstance.playCard();
-        editHold= editText.getText().toString();
-        editText.setText(editHold + "Player played card.\n", TextView.BufferType.NORMAL);
-
-        editHold= editText.getText().toString();
-        editText.setText(editHold + "Player quit game.\n", TextView.BufferType.NORMAL);
-        firstInstance.quit();
-
-    }
 
 }
