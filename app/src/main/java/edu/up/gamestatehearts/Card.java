@@ -17,10 +17,10 @@ public class Card {
     //coins = clubs
     //wands = diamonds
 
-    public static final int cups = 1;   //hearts
-    public static final int swords = 2; //spades
-    public static final int coins = 3;  //clubs
-    public static final int wands = 4;  //diamonds
+    public static final int CUPS = 1;   //hearts
+    public static final int SWORDS = 2; //spades
+    public static final int COINS = 3;  //clubs
+    public static final int WANDS = 4;  //diamonds
 
     //a card has value and a suit
     int cardVal;

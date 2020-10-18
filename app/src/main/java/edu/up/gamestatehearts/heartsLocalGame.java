@@ -3,6 +3,9 @@ package edu.up.gamestatehearts;
 
 import java.util.ArrayList;
 
+import static edu.up.gamestatehearts.Card.CUPS;
+import static edu.up.gamestatehearts.Card.SWORDS;
+
 public class heartsLocalGame {
 
     private gameStateHearts state;
@@ -69,20 +72,53 @@ public class heartsLocalGame {
         }
         else { return false; }
     }
+    boolean isCardValid(ArrayList<Card> p1Hand, Card card) {
+        if(isInSuit(card)) {
+            return true;
+        }
+        else {
+            for (Card c :p1Hand) {
+                if (c.getCardSuit() == state.getSuitLed()) {
+                    return false;
+                }
+            }
+            if (state.isHeartsBroken()) {
+                return true;
+            } else {
+                if (card.getCardSuit() == CUPS || (card.getCardSuit() == SWORDS && card.getCardSuit() == 12)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
 
     boolean playCard() {
-        if(state.getWhoTurn() == 1) {
+        if(state.getWhoTurn() == 1 && isCardValid(state.getP1Hand(),state.getSelectedCard())) {
             state.getCardsPlayed().add(state.getSelectedCard());
+            state.getP1Hand().remove(state.getSelectedCard());
             return true;
         }
         return false;
     }
 
     boolean passCard(){
-        if(state.getCardsPassed() < 4 && state.getWhoTurn() == 1 && state.getTricksPlayed() == 0) {
-            //check to see if selectedCard is not null
-            //pass selectedCard
+        ArrayList<Card> tempHand = new ArrayList<>();
+        while(state.getCardsPassed() < 4 && state.getWhoTurn() == 1 && state.getTricksPlayed() == 0) {
+            if(state.getSelectedCard() !=null) {
+                state.getP1Hand().remove(state.getSelectedCard());
+                tempHand.add(state.getSelectedCard());
+            }
+            state.setCardsPassed(state.getCardsPassed()+1);
+        }
+        for(Card c : tempHand){
+            state.getP2Hand().add(c);
             return true;
+        }
+        //returns false if temp hand is empty and they dont select cards.
+        if(tempHand == null) {
+            return false;
         }
         return false;
     }

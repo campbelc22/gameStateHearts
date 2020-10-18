@@ -8,7 +8,7 @@
 package edu.up.gamestatehearts;
 
 import java.util.*;
-import static edu.up.gamestatehearts.Card.coins;
+import static edu.up.gamestatehearts.Card.COINS;
 
 public class gameStateHearts {
 
@@ -54,7 +54,7 @@ public class gameStateHearts {
 
         numCards = 13;
         heartsBroken = false;
-        suitLed = coins;
+        suitLed = COINS;
         tricksPlayed = 0;
         cardsPassed = 0;
 
