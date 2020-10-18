@@ -1,5 +1,6 @@
 package edu.up.gamestatehearts;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import static edu.up.gamestatehearts.R.id.runTestButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //declare variables
     private EditText editText;
     private Button testButton;
     private String secondInstanceToString;
@@ -23,8 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick (View v){
         editText.setText("", TextView.BufferType.NORMAL);
-        gameStateHearts firstInstance = new gameStateHearts();
-        gameStateHearts secondInstance = new gameStateHearts(firstInstance);
+        heartsLocalGame firstInstance = new heartsLocalGame();
+        heartsLocalGame secondInstance = new heartsLocalGame(firstInstance);
 
         firstInstance.selectCard(testCard);
         editText.append("Player selected card.\n");
@@ -44,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.append("Player quit game.\n");
 
 
-        gameStateHearts thirdInstance = new gameStateHearts();
-        gameStateHearts fourthInstance = new gameStateHearts(thirdInstance);
+        heartsLocalGame thirdInstance = new heartsLocalGame();
+        heartsLocalGame fourthInstance = new heartsLocalGame(thirdInstance);
 
         editText.append("Called toString on second and fourth Instances.\n");
 
