@@ -1,3 +1,11 @@
+/**
+ * Hearts Local Game class
+ * contains all gameplay functions for the Hearts (Chalice) game
+ *
+ * @version October 18, 2020
+ * @author  Alex Junkins, Malia Lundstrom, Chloe Campbell, Addison Raak
+ */
+
 package edu.up.gamestatehearts;
 
 
@@ -10,10 +18,17 @@ public class heartsLocalGame {
 
     private gameStateHearts state;
 
+    /**
+     * Blank constructor
+     */
     public heartsLocalGame() {
         state = new gameStateHearts();
     }
 
+    /**
+     * Deep-copy constructor
+     * @param localGame game to be copied
+     */
     public heartsLocalGame(heartsLocalGame localGame) {
         state = new gameStateHearts(localGame.state);
     }
@@ -24,6 +39,12 @@ public class heartsLocalGame {
         return true;
     }
 
+    /**
+     * A method to check if a card belongs to the leading suit
+     *
+     * @param card  card to check
+     * @return      In suit
+     */
     boolean isInSuit (Card card) {
         int suit = card.getCardSuit();
         if (state.getSuitLed() == suit) {
@@ -32,6 +53,10 @@ public class heartsLocalGame {
         return false;
     }
 
+    /**
+     * A method to retrieve the in-suit cards that have been played
+     * @return  ArrayList of played cards in suit
+     */
     ArrayList<Card> CardsInSuit() {
         ArrayList<Card> cardsInSuit = new ArrayList<>();
         if(isInSuit(state.getSelectedCard())) {
@@ -65,6 +90,12 @@ public class heartsLocalGame {
         return false;
     }*/
 
+    /**
+     * A method to select a card
+     *
+     * @param card  the card to select
+     * @return      success status
+     */
     boolean selectCard(Card card) {
         if(state.getWhoTurn() == 1) {
             state.setSelectedCard(card);
@@ -72,6 +103,14 @@ public class heartsLocalGame {
         }
         else { return false; }
     }
+
+    /**
+     * A method to check if a card is a valid play, given the current state of the game
+     *
+     * @param card      the card to check
+     * @param p1Hand    the rest of the hand
+     * @return          legality status of the card
+     */
     boolean isCardValid(ArrayList<Card> p1Hand, Card card) {
         if(isInSuit(card)) {
             return true;
@@ -94,6 +133,11 @@ public class heartsLocalGame {
         }
     }
 
+    /**
+     * A method to check if it is legal to play the selected card in a player's hand
+     *
+     * @return  legality status
+     */
     boolean playCard() {
         if(state.getWhoTurn() == 1 && isCardValid(state.getP1Hand(),state.getSelectedCard())) {
             state.getCardsPlayed().add(state.getSelectedCard());
@@ -103,6 +147,12 @@ public class heartsLocalGame {
         return false;
     }
 
+    /**
+     * A method to handle the passing-card phase of play
+     * (may be modified to handle just one passing of a card)
+     *
+     * @return  true if successful, false if temporary hand is empty.
+     */
     boolean passCard(){
         ArrayList<Card> tempHand = new ArrayList<>();
         while(state.getCardsPassed() < 4 && state.getWhoTurn() == 1 && state.getTricksPlayed() == 0) {
@@ -125,7 +175,10 @@ public class heartsLocalGame {
 
     /**
      * this method prints the values of all of the variables in the game state by saving them all
-     *  to a String.
+     * to a String.
+     *
+     * @return  Current score of all players, running score of all players, number of cards in
+     *          hand, references for suit numbers
      */
     @Override
     public String toString() {
