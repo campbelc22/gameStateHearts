@@ -33,6 +33,13 @@ public class heartsLocalGame {
         state = new gameStateHearts(localGame.state);
     }
 
+    /**
+     * A tester method to randomize the game state's values
+     * CAUTION: THIS WILL DESTROY ALL GAME DATA IF USED IN NORMAL GAME
+     */
+    public void Randomize(){
+        state.Randomize();
+    }
 
     boolean quit() {
         //you can always quit!!

@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick (View v){
         editText.setText("", TextView.BufferType.NORMAL);
         heartsLocalGame firstInstance = new heartsLocalGame();
+        firstInstance.Randomize();
+        editText.append("First Instance: \n" + firstInstance.toString());
         heartsLocalGame secondInstance = new heartsLocalGame(firstInstance);
 
         firstInstance.selectCard(testCard);
