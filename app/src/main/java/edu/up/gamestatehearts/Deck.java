@@ -44,8 +44,8 @@ public class Deck {
         this.usedCards = oldDeck.usedCards;
 
         //deep-copy every card in the previous deck
-        this.deck = new ArrayList<Card>(52);
-        for(int cardNum = 0; cardNum < 53; cardNum++) {
+        this.deck = new ArrayList<Card>();
+        for(int cardNum = 0; cardNum < oldDeck.deck.size(); cardNum++) {
             deck.add(new Card(oldDeck.deck.get(cardNum)));
         }
     }
