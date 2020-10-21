@@ -71,6 +71,9 @@ public class gameStateHearts {
         p3Hand = new ArrayList<>();
         p4Hand = new ArrayList<>();
         cardsPlayed = new ArrayList<>();
+        dealCards();
+
+
     }
 
     /**
@@ -391,6 +394,17 @@ public class gameStateHearts {
         cardsPlayed = new ArrayList<>();
     }
 
+    /**
+     *
+     */
+    public void dealCards(){
+        for(int i=0; i<13; i++){
+            p1Hand.add(deck.getNextCard());
+            p2Hand.add(deck.getNextCard());
+            p3Hand.add(deck.getNextCard());
+            p4Hand.add(deck.getNextCard());
+        }
+    }
 
     /** Setters for instance variables **/
     public int getP1numCurrentPoints() {
