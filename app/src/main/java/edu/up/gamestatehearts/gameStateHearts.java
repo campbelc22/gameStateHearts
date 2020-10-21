@@ -58,8 +58,8 @@ public class gameStateHearts {
         p3RunningPoints = 0;
         p4RunningPoints = 0;
 
-        deck = new Deck(); //automatically created with random card order
-        deck.shuffle();
+        deck = new Deck(); //automatically created with default card order
+        //deck.shuffle();
         numCards = 13;
         heartsBroken = false;
         suitLed = COINS;
@@ -71,7 +71,7 @@ public class gameStateHearts {
         p3Hand = new ArrayList<>();
         p4Hand = new ArrayList<>();
         cardsPlayed = new ArrayList<>();
-        dealCards();
+        dealCards(); //should cards be dealt in the default constructor?
 
 
     }
