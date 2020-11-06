@@ -16,7 +16,7 @@ import static edu.up.gamestatehearts.Card.SWORDS;
 
 public class heartsLocalGame {
 
-    private gameStateHearts state;
+    public gameStateHearts state;
 
     /**
      * Blank constructor
@@ -34,7 +34,7 @@ public class heartsLocalGame {
     }
 
 
-    boolean quit() {
+    public boolean quit() {
         //you can always quit!!
         return true;
     }
@@ -45,7 +45,7 @@ public class heartsLocalGame {
      * @param card  card to check
      * @return      In suit
      */
-    boolean isInSuit (Card card) {
+    public boolean isInSuit (Card card) {
         int suit = card.getCardSuit();
         if (state.getSuitLed() == suit) {
             return true;
@@ -57,7 +57,7 @@ public class heartsLocalGame {
      * A method to retrieve the in-suit cards that have been played
      * @return  ArrayList of played cards in suit
      */
-    ArrayList<Card> CardsInSuit() {
+    public ArrayList<Card> cardsInSuit() {
         ArrayList<Card> cardsInSuit = new ArrayList<>();
         if(isInSuit(state.getSelectedCard())) {
             cardsInSuit.add(state.getP1CardPlayed());
@@ -96,7 +96,7 @@ public class heartsLocalGame {
      * @param card  the card to select
      * @return      success status
      */
-    boolean selectCard(Card card) {
+    public boolean selectCard(Card card) {
         if(state.getWhoTurn() == 1) {
             state.setSelectedCard(card);
             return true;
@@ -111,7 +111,7 @@ public class heartsLocalGame {
      * @param p1Hand    the rest of the hand
      * @return          legality status of the card
      */
-    boolean isCardValid(ArrayList<Card> p1Hand, Card card) {
+    public boolean isCardValid(ArrayList<Card> p1Hand, Card card) {
         if(isInSuit(card)) {
             return true;
         }
@@ -138,7 +138,7 @@ public class heartsLocalGame {
      *
      * @return  legality status
      */
-    boolean playCard() {
+    public boolean playCard() {
         if(state.getWhoTurn() == 1 && isCardValid(state.getP1Hand(),state.getSelectedCard())) {
             state.getCardsPlayed().add(state.getSelectedCard());
             state.getP1Hand().remove(state.getSelectedCard());
