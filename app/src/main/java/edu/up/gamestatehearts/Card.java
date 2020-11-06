@@ -61,7 +61,7 @@ public class Card {
      */
     public Card (Card oldCard){ //deep copy
         //check card validity and suit
-        int check = checkCardVals(oldCard.cardVal, oldCard.cardVal);
+        int check = checkCardVals(oldCard.cardVal, oldCard.cardSuit);
         if (check < 0) {
             if (check == -1) {
                 Log.e("Card", "Tried to initialize a card with a bad value: " + oldCard.cardVal);

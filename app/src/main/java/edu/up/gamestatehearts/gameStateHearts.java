@@ -7,14 +7,20 @@
  */
 package edu.up.gamestatehearts;
 
+import android.util.Log;
+
 import java.util.*;
 import static edu.up.gamestatehearts.Card.COINS;
+import static edu.up.gamestatehearts.Card.CUPS;
+import static edu.up.gamestatehearts.Card.SWORDS;
 
 public class gameStateHearts {
 
     //instance variables
     private int p1numCurrentPoints, p2numCurrentPoints, p3numCurrentPoints, p4numCurrentPoints;
     private int p1RunningPoints, p2RunningPoints, p3RunningPoints, p4RunningPoints;
+
+    private Deck deck;
 
     private int numCards;
     private Card selectedCard;
@@ -52,6 +58,8 @@ public class gameStateHearts {
         p3RunningPoints = 0;
         p4RunningPoints = 0;
 
+        deck = new Deck(); //automatically created with default card order
+        //deck.shuffle();
         numCards = 13;
         heartsBroken = false;
         suitLed = COINS;
@@ -63,6 +71,9 @@ public class gameStateHearts {
         p3Hand = new ArrayList<>();
         p4Hand = new ArrayList<>();
         cardsPlayed = new ArrayList<>();
+        dealCards(); //should cards be dealt in the default constructor?
+
+
     }
 
     /**
@@ -83,6 +94,7 @@ public class gameStateHearts {
         p3RunningPoints = oldState.p3RunningPoints;
         p4RunningPoints = oldState.p4RunningPoints;
 
+        deck = new Deck(oldState.deck);
         numCards = oldState.numCards;
         heartsBroken = oldState.heartsBroken;
         suitLed = oldState.suitLed;
@@ -93,6 +105,7 @@ public class gameStateHearts {
         p3Hand = handDeepCopy(oldState.p3Hand);
         p4Hand = handDeepCopy(oldState.p4Hand);
         cardsPlayed= handDeepCopy(oldState.cardsPlayed);
+
     }
 
     /**
@@ -109,6 +122,289 @@ public class gameStateHearts {
         return newList;
     }
 
+    /**
+     * a tester method to fill the game-state with random but
+     * probably-realistically expectable values
+     * - assumes 100 points is winning score
+     * I wrote this at 2 am so it doesn't follow the fit on one screen rule
+     * or a bunch of other code standard rules
+     * sorry not sorry
+     */
+    public void Randomize(){
+        this.Reset();
+
+        // pick a random amount of completed rounds to have been played and assign
+        // points up to that round. Only do so if no player's points go over 100
+        Random rn = new Random();
+        int prevPointsP1 = 0;
+        int prevPointsP2 = 0;
+        int prevPointsP3 = 0;
+        int prevPointsP4 = 0;
+
+        int prevRounds = rn.nextInt(7); //the QoS can only be taken 7 times without
+        //a player going over 100
+        //loop for previous rounds
+        for (int i = 0; i < prevRounds; i++){
+            //save values in case this round puts us over
+            prevPointsP1 = p1numCurrentPoints;
+            prevPointsP2 = p2numCurrentPoints;
+            prevPointsP3 = p3numCurrentPoints;
+            prevPointsP4 = p4numCurrentPoints;
+
+            //off-the-top-of-my-head chance for a STM: 1 in 20
+            int STM = rn.nextInt(20);
+            if (STM == 7){ //my favorite number
+                //pick a random player and give everyone else 26 points
+                int luckyducky = rn.nextInt(4);
+                switch (luckyducky){
+                    case 0:
+                        p2numCurrentPoints += 26;
+                        p3numCurrentPoints += 26;
+                        p4numCurrentPoints += 26;
+                        break;
+                    case 1:
+                        p1numCurrentPoints += 26;
+                        p3numCurrentPoints += 26;
+                        p4numCurrentPoints += 26;
+                        break;
+                    case 2:
+                        p1numCurrentPoints += 26;
+                        p2numCurrentPoints += 26;
+                        p4numCurrentPoints += 26;
+                        break;
+                    case 3:
+                        p1numCurrentPoints += 26;
+                        p2numCurrentPoints += 26;
+                        p3numCurrentPoints += 26;
+                        break;
+                    default: //in an emergency, player 3 is the lucky ducky
+                        Log.d("Randomization Error",
+                                "Shoot the Moon generation error");
+                        p1numCurrentPoints += 26;
+                        p2numCurrentPoints += 26;
+                        p4numCurrentPoints += 26;
+                        break;
+                }
+            } else {
+                //if nobody shot the moon, assign 13 points randomly between
+                //players, and randomly add another 13 for QoS on the 8th loop
+                for(int j = 0; j < 13; j++){
+                    int player = rn.nextInt(4);
+                    switch (player){
+                        case 0:
+                            p1numCurrentPoints += 1;
+                            if (j == 7) { p1numCurrentPoints += 13; }
+                            break;
+                        case 1:
+                            p2numCurrentPoints += 1;
+                            if (j == 7) { p2numCurrentPoints += 13; }
+                            break;
+                        case 2:
+                            p3numCurrentPoints += 1;
+                            if (j == 7) { p3numCurrentPoints += 13; }
+                            break;
+                        case 3:
+                            p4numCurrentPoints += 1;
+                            if (j == 7) { p4numCurrentPoints += 13; }
+                            break;
+                        default: //in an emergency, player 1 is picked
+                            Log.d("Randomization Error",
+                                    "Cup point generation error");
+                            p1numCurrentPoints += 1;
+                            if (j == 7) { p1numCurrentPoints += 13; }
+                            break;
+
+                    }
+                }
+            }
+
+            //check if we went over. If so, reset values
+            if (p1numCurrentPoints >= 100 ||
+                    p2numCurrentPoints >= 100 ||
+                    p3numCurrentPoints >= 100 ||
+                    p4numCurrentPoints >= 100){
+                p1numCurrentPoints = prevPointsP1;
+                p2numCurrentPoints = prevPointsP2;
+                p3numCurrentPoints = prevPointsP3;
+                p4numCurrentPoints = prevPointsP4;
+                break;
+            }
+        }
+
+        //pick random amount of point cards played for the current round
+        int cupsPlayed = rn.nextInt(13); //not to be confused with the instance var. Sorry.
+        Boolean queenPlayed = rn.nextBoolean();
+        if (cupsPlayed > 0 || queenPlayed) { heartsBroken = true; }
+        //NOTE: while unlikely, this could potentially result in a situation where
+        //the QoS has been played but hearts/cups have not been broken
+        //fun fact: the chance is approximately 1 in 26
+
+        //randomly assign running points
+        for (int i = 0; i < cupsPlayed; i++){
+            this.cardsPlayed.add(deck.removeCup());
+            int player = rn.nextInt(4);
+            switch (player){
+                case 0:
+                    p1RunningPoints += 1;
+                    break;
+                case 1:
+                    p2RunningPoints += 1;
+                    break;
+                case 2:
+                    p3RunningPoints += 1;
+                    break;
+                case 3:
+                    p4RunningPoints += 1;
+                    break;
+                default: //in an emergency, player 1 is picked
+                    Log.d("Randomization Error",
+                            "Cup running point generation error");
+                    p1RunningPoints += 1;
+                    break;
+
+            }
+        }
+        if (queenPlayed){
+            this.cardsPlayed.add(deck.removeQueen());
+            int player = rn.nextInt(4);
+            switch (player){
+                case 0:
+                    p1RunningPoints += 13;
+                    break;
+                case 1:
+                    p2RunningPoints += 13;
+                    break;
+                case 2:
+                    p3RunningPoints += 13;
+                    break;
+                case 3:
+                    p4RunningPoints += 13;
+                    break;
+                default: //in an emergency, player 1 is picked
+                    Log.d("Randomization Error",
+                            "Queen running point generation error");
+                    p1RunningPoints += 13;
+                    break;
+
+            }
+        }
+
+        //remove cards until the deck is divisible by four, calculate tricksPlayed
+        while(deck.cardsLeft() % 4 != 0){
+            this.cardsPlayed.add(deck.getNextCard());
+        }
+        tricksPlayed = (52 - deck.cardsLeft()) / 4;
+
+        //deal out the cards to the remaining players
+        while(deck.cardsLeft() > 0){
+            p1Hand.add(deck.getNextCard());
+            p2Hand.add(deck.getNextCard());
+            p3Hand.add(deck.getNextCard());
+            p4Hand.add(deck.getNextCard());
+        }
+
+        //always assumes player 1 leads the current trick
+        int cardsPlayed = rn.nextInt(3); //if it was 4, the trick would be over
+        numCards = p1Hand.size() * 4;
+        numCards -= cardsPlayed;
+        Card playedCard;
+        if (cardsPlayed >= 1){
+            //play 1st card in p1's hand
+            playedCard = p1Hand.get(0);
+            p1CardPlayed = playedCard;
+            p1Hand.remove(playedCard);
+            suitLed = playedCard.cardSuit;
+            this.cardsPlayed.add(playedCard);
+        }
+        if (cardsPlayed >= 2){
+            //find first card of cardSuit
+            int cardToPlay = 0;
+            for (int i = 0; i < p2Hand.size(); i++){
+                if (p2Hand.get(i).cardSuit == suitLed){
+                    cardToPlay = i;
+                    break;
+                }
+                //if not, try for a heart or the queen of Spades
+                if (heartsBroken){
+                    if (p2Hand.get(i).cardSuit == 1 || (p2Hand.get(i).cardSuit == 2 && p2Hand.get(i).cardVal == 12)){
+                        cardToPlay = i;
+                        break;
+                    }
+                }
+            }
+            //if no legal cards, play the first card in the hand
+            playedCard = p2Hand.get(cardToPlay);
+            p2CardPlayed = playedCard;
+            p2Hand.remove(playedCard);
+            this.cardsPlayed.add(playedCard);
+        }
+        if (cardsPlayed >= 3){
+            //find first card of cardSuit
+            int cardToPlay = 0;
+            for (int i = 0; i < p3Hand.size(); i++){
+                if (p3Hand.get(i).cardSuit == suitLed){
+                    cardToPlay = i;
+                    break;
+                }
+                //if not, try for a heart or the queen of Spades
+                if (heartsBroken){
+                    if (p3Hand.get(i).cardSuit == 1 || (p3Hand.get(i).cardSuit == 2 && p3Hand.get(i).cardVal == 12)){
+                        cardToPlay = i;
+                        break;
+                    }
+                }
+            }
+            //if no legal cards, play the first card in the hand
+            playedCard = p3Hand.get(cardToPlay);
+            p3CardPlayed = playedCard;
+            p3Hand.remove(playedCard);
+            this.cardsPlayed.add(playedCard);
+        }
+
+        //does not change cards passed b/c random state assumedly takes place mid-round
+        Log.d("Randomize Debug", "finished randomization.");
+    }
+
+    /**
+     * a helper method to reset all values of a state to a blank state
+     */
+    private void Reset(){
+        p1numCurrentPoints = 0;
+        p2numCurrentPoints = 0;
+        p3numCurrentPoints = 0;
+        p4numCurrentPoints = 0;
+
+        p1RunningPoints = 0;
+        p2RunningPoints = 0;
+        p3RunningPoints = 0;
+        p4RunningPoints = 0;
+
+        deck = new Deck();
+        deck.shuffle();
+        numCards = 13;
+        heartsBroken = false;
+        suitLed = COINS;
+        tricksPlayed = 0;
+        cardsPassed = 0;
+
+        p1Hand = new ArrayList<>();
+        p2Hand = new ArrayList<>();
+        p3Hand = new ArrayList<>();
+        p4Hand = new ArrayList<>();
+        cardsPlayed = new ArrayList<>();
+    }
+
+    /**
+     *
+     */
+    public void dealCards(){
+        for(int i=0; i<13; i++){
+            p1Hand.add(deck.getNextCard());
+            p2Hand.add(deck.getNextCard());
+            p3Hand.add(deck.getNextCard());
+            p4Hand.add(deck.getNextCard());
+        }
+    }
 
     /** Setters for instance variables **/
     public int getP1numCurrentPoints() {
@@ -146,6 +442,8 @@ public class gameStateHearts {
     public int getNumCards() {
         return numCards;
     }
+
+    public Deck getDeck() { return deck;}
 
     public Card getSelectedCard() {
         return selectedCard;
@@ -254,6 +552,8 @@ public class gameStateHearts {
     public void setP4RunningPoints(int p4RunningPoints) {
         this.p4RunningPoints = p4RunningPoints;
     }
+
+    public void setDeck(Deck newDeck) { this.deck = newDeck; }
 
     public void setNumCards(int numCards) {
         this.numCards = numCards;
